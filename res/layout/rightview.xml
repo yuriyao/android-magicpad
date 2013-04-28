@@ -4,4 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+    <org.footoo.magictrackpad.view.MagicRightView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
 </LinearLayout>
