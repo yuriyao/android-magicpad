@@ -5,12 +5,12 @@ public class TransUtils {
 
   }
 
-  public static boolean send() {
-    return false;
+  public static boolean send(Command cmd) {
+    return sendViaUSB(cmd.getCode());
   }
 
   public static boolean send(Command cmd, int delX, int delY) {
-    return false;
+    return sendViaUSB(cmd.getCode());
   }
 
   public enum Command {
@@ -32,4 +32,7 @@ public class TransUtils {
     }
   }
 
+  private static boolean sendViaUSB(int cmdCode) {
+    return false;
+  }
 }
