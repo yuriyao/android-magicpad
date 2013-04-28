@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -48,19 +49,22 @@ public class MagicLeftView extends View {
 		innerPaint.setColor(0x00000000);
 		innerPaint.setStrokeWidth(2);
 		currentPaint = new Paint();
-		currentPaint.setColor(0x00000000);
+		currentPaint.setColor(0xFF000000);
+		currentPaint.setStrokeWidth(2);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawCircle(px, py, px, outerPaint);
-		canvas.drawCircle(px, py, px, innerPaint);
+		innerPaint.setColor(0x00000000);
+		canvas.drawCircle(px, py, 2*px/3, innerPaint);
 		innerPaint.setColor(0xFF8B4726);
-		canvas.drawCircle(px, py, 2 * px / 3, innerPaint);
+		canvas.drawCircle(px, py, 2*px/3, innerPaint);
 
 		if (currentRotation) {
 			canvas.drawCircle((float)currentX, (float)currentY, px / 6, currentPaint);
+			Log.v("location", currentX+" "+currentY+" "+px+" "+py);
 		}
 	}
 
