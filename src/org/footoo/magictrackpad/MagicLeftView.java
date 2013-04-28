@@ -4,37 +4,57 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class MagicLeftView extends View {
 
 	private int px, py;
 	private Paint gPaint;	//画手势路径的paint
+	private Paint outerPaint;
+	private Paint innerPaint;
 	
 	public MagicLeftView(Context context) {
 		super(context);
-		gPaint = new Paint();
-		gPaint.setColor(0x44000000);
-		gPaint.setStrokeWidth(8);
+		setPaint();
 	}
 	
 	public MagicLeftView(Context context, AttributeSet attr){
 		super(context, attr);
-		gPaint = new Paint();
-		gPaint.setColor(0x44000000);
-		gPaint.setStrokeWidth(8);
+		setPaint();
 	}
 	public MagicLeftView(Context context, AttributeSet attr, int arg){
 		super(context, attr, arg);
+		setPaint();
+	}
+	
+	private void setPaint(){
 		gPaint = new Paint();
 		gPaint.setColor(0x44000000);
-		gPaint.setStrokeWidth(8);
+		gPaint.setStrokeWidth(2);
+		
+		outerPaint = new Paint();
+		outerPaint.setColor(0xFFFFA500);
+		outerPaint.setStrokeWidth(2);
+		innerPaint = new Paint();
+		innerPaint.setColor(0x00000000);
+		innerPaint.setStrokeWidth(2);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas){
 		super.onDraw(canvas);
-		canvas.drawCircle(px/2, py/2, px/2, gPaint);
+		canvas.drawCircle(px, py, px,  outerPaint);
+		canvas.drawCircle(px, py, px, innerPaint);
+		innerPaint.setColor(0xFF8B4726);
+		canvas.drawCircle(px, py, 2*px/3, innerPaint);
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event){
+		float x = event.getX();
+		float y = event.getY();
+		return true;
 	}
 
 	/**
