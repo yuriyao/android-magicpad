@@ -1,4 +1,4 @@
-package org.footoo.magictrackpad;
+package org.footoo.magictrackpad.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
