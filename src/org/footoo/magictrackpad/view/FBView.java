@@ -148,7 +148,7 @@ public class FBView<T extends Number> extends ImageView {
         thumbWidth = thumbImage.getWidth();
         thumbHalfWidth = 0.5f * thumbWidth;
         thumbHalfHeight = 0.5f * thumbImage.getHeight();
-        lineHeight = 0.3f * thumbHalfHeight;
+        lineHeight = 3.0f * thumbHalfHeight;
         padding = thumbHalfWidth;
 
         // make RangeSeekBar focusable. This solves focus handling issues in
@@ -159,125 +159,7 @@ public class FBView<T extends Number> extends ImageView {
         init();
     }
 
-    /**
-     * Creates a new RangeSeekBar.
-     * 
-     * @param absoluteMinValue
-     *            The minimum value of the selectable range.
-     * @param absoluteMaxValue
-     *            The maximum value of the selectable range.
-     * @param context
-     * @param singleColor
-     *            The <tt>int</tt> of the color to go between the two thumb
-     *            points will Default to #FF33B5E5 (ICS) if 0 is sent.
-     * @param thumbNormal_ResID
-     *              The ResourceID of the image for the normal thumb icon.
-     * @param thumbPressed_ResID
-     *              The ResourceID of the image for the pressed thumb icon.
-     * @throws IllegalArgumentException
-     *             Will be thrown if min/max value type is not one of Long,
-     *             Double, Integer, Float, Short, Byte or BigDecimal.
-     */
-    public FBView(T absoluteMinValue, T absoluteMaxValue,
-            Context context, int singleColor, int thumbNormal_ResID,
-            int thumbPressed_ResID) throws IllegalArgumentException {
-        super(context);
-        this.absoluteMinValue = absoluteMinValue;
-        this.absoluteMaxValue = absoluteMaxValue;
-        absoluteMinValuePrim = absoluteMinValue.doubleValue();
-        absoluteMaxValuePrim = absoluteMaxValue.doubleValue();
-        numberType = NumberType.fromNumber(absoluteMinValue);
-        IS_MULTI_COLORED = false;
-        SINGLE_COLOR = singleColor < 0 ? singleColor : Color.argb(0xFF, 0x33,
-                0xB5, 0xE5);
-        LEFT_COLOR = 0;
-        MIDDLE_COLOR = 0;
-        RIGHT_COLOR = 0;
-        thumbImage = BitmapFactory.decodeResource(getResources(),
-                thumbNormal_ResID);
-        thumbPressedImage = BitmapFactory.decodeResource(getResources(),
-                thumbPressed_ResID);
-        thumbWidth = thumbImage.getWidth();
-        thumbHalfWidth = 0.5f * thumbWidth;
-        thumbHalfHeight = 0.5f * thumbImage.getHeight();
-        lineHeight = 0.3f * thumbHalfHeight;
-        padding = thumbHalfWidth;
-
-        // make RangeSeekBar focusable. This solves focus handling issues in
-        // case EditText widgets are being used along with the RangeSeekBar
-        // within ScollViews.
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        init();
-    }
-    
-    /**
-     * Creates a new RangeSeekBar.
-     * 
-     * @param absoluteMinValue
-     *            The minimum value of the selectable range.
-     * @param absoluteMaxValue
-     *            The maximum value of the selectable range.
-     * @param context
-     * @param singleColor
-     *            This will be 0 here and not be used in the code.
-     * @param leftColor
-     *            The <tt>int</tt> of the color to go between the left most
-     *            point and the left (min) thumb point. will Default to
-     *            #FFFF0000 (RED) if 0 is sent.
-     * @param middleColor
-     *            The <tt>int</tt> of the color to go between the two thumb
-     *            points will Default to #FF00FF00 (GREEN) if 0 is sent.
-     * @param rightColor
-     *            The <tt>int</tt> of the color to go between the right most
-     *            point and the right (max) thumb point. will Default to
-     *            #FF0000FF (BLUE) if 0 is sent.
-     * @param thumbNormal_ResID
-     *              The ResourceID of the image for the normal thumb icon.
-     * @param thumbPressed_ResID
-     *              The ResourceID of the image for the pressed thumb icon.
-     * @throws IllegalArgumentException
-     *             Will be thrown if min/max value type is not one of Long,
-     *             Double, Integer, Float, Short, Byte or BigDecimal.
-     */
-    public FBView(T absoluteMinValue, T absoluteMaxValue,
-            Context context, int leftColor, int middleColor, int rightColor,
-            int thumbNormal_ResID, int thumbPressed_ResID)
-            throws IllegalArgumentException {
-        super(context);
-        this.absoluteMinValue = absoluteMinValue;
-        this.absoluteMaxValue = absoluteMaxValue;
-        absoluteMinValuePrim = absoluteMinValue.doubleValue();
-        absoluteMaxValuePrim = absoluteMaxValue.doubleValue();
-        numberType = NumberType.fromNumber(absoluteMinValue);
-
-        // Added so we can draw right colors
-        IS_MULTI_COLORED = true;
-        SINGLE_COLOR = 0;
-        LEFT_COLOR = leftColor < 0 ? leftColor : Color.argb(0xFF, 0xFF, 0x00,
-                0x00);
-        MIDDLE_COLOR = middleColor < 0 ? middleColor : Color.argb(0xFF, 0x00,
-                0xFF, 0x00);
-        RIGHT_COLOR = rightColor < 0 ? rightColor : Color.argb(0xFF, 0x00,
-                0x00, 0xFF);
-        thumbImage = BitmapFactory.decodeResource(getResources(),
-                thumbNormal_ResID);
-        thumbPressedImage = BitmapFactory.decodeResource(getResources(),
-                thumbPressed_ResID);
-        thumbWidth = thumbImage.getWidth();
-        thumbHalfWidth = 0.5f * thumbWidth;
-        thumbHalfHeight = 0.5f * thumbImage.getHeight();
-        lineHeight = 0.3f * thumbHalfHeight;
-        padding = thumbHalfWidth;
-
-        // make RangeSeekBar focusable. This solves focus handling issues in
-        // case EditText widgets are being used along with the RangeSeekBar
-        // within ScollViews.
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        init();
-    }
-
+   
     private final void init() {
         mScaledTouchSlop = ViewConfiguration.get(getContext())
                 .getScaledTouchSlop();

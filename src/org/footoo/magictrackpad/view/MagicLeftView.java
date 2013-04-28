@@ -10,7 +10,7 @@ import android.view.View;
 
 public class MagicLeftView extends View {
 
-	private int px, py;// 圆心
+	private float px, py;// 圆心
 	private Paint gPaint; // 画手势路径的paint
 	private Paint outerPaint;
 	private Paint innerPaint;
@@ -18,6 +18,7 @@ public class MagicLeftView extends View {
 	private double currentX;
 	private double currentY;
 	private Paint currentPaint;
+	private float mx, my;
 
 	public MagicLeftView(Context context) {
 		super(context);
@@ -82,23 +83,58 @@ public class MagicLeftView extends View {
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
+			if(currentRotation){
+				circle_move(x,y);
+				invalidate();
+			}
 			break;
 		case MotionEvent.ACTION_UP:
+			currentRotation = false;
 			break;
 		}
 
 		return true;
 	}
 
+	private void circle_move(float x, float y) {
+        float dx = Math.abs(x - mx);
+        float dy = Math.abs(y - my);
+        
+        if (dx >= 1.0 || dy >= 1.0) {
+            mx = x;
+            my = y;
+            circle_start(mx, my);
+        }
+	}
+
 	//此函数求出当前圆心的位置。
-	private void circle_start(double x, double y) {
-		double alpha = Math.cosh((px-x)/(py-y));
-		double radius = 5*px/6;
-		currentX = px - Math.cos(alpha)*radius;
-		currentY = py - Math.sin(alpha)*radius;
+	private void circle_start(float x, float y) {
+		double radius;
+		double alpha;
+		radius = 5*px/6;
+		mx = x;
+		my = y;
+		if (x<px&&y<py){
+			alpha = Math.tanh((py-y)/(px-x));
+			currentX = px - Math.cos(alpha)*radius;
+			currentY = py - Math.sin(alpha)*radius;
+		}else if(x<px&&y>py){
+			alpha = Math.tanh((px-x)/(y-py));
+			currentY = py + Math.cos(alpha)*radius;
+			currentX = px - Math.sin(alpha)*radius;
+		}else if(x>px&&y<py){
+			alpha = Math.tanh((py-y)/(x-px));
+			currentX = px + Math.cos(alpha)*radius;
+			currentY = py - Math.sin(alpha)*radius;
+		}else{
+			alpha = Math.tanh((x-px)/(y-py));
+			currentY = py + Math.cos(alpha)*radius;
+			currentX = px + Math.sin(alpha)*radius;
+		}
 	}
 
 	private boolean isRotation(float x, float y) {
+		Log.v("location touch", x+" "+y);
 		if ((Math.pow(x - px, 2) + Math.pow(y - py, 2)) <= Math.pow(2 * px / 3,
 				2)) {
 			return false;
