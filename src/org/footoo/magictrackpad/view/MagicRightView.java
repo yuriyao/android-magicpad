@@ -11,7 +11,7 @@ public class MagicRightView extends View {
 
   private static final String TAG = MagicRightView.class.getSimpleName();
 
-  private int fingures = 0;
+  private int fingers = 0;
   private ViewType currentViewType = ViewType.DRAGPAD;
 
   public MagicRightView(Context context, AttributeSet attrs, int defStyle) {
@@ -32,29 +32,51 @@ public class MagicRightView extends View {
     final int action = event.getAction();
     switch (action & MotionEvent.ACTION_MASK) {
       case MotionEvent.ACTION_MOVE:
-        if (fingures == 1) {
-          Log.d(TAG, "DRAG");
+        if (fingers == 1) {
+          /*
+           * //Test Code
+           * if (currentViewType == ViewType.DRAGPAD) {
+           * Log.d(TAG, "DRAG");
+           * } else {
+           * Log.d(TAG, "DRAG WRONG!!!");
+           * }
+           */
         }
-        else if (fingures == 2) {
-          Log.d(TAG, "TWO MOVE");
+        else if (fingers == 2) {
+          /*
+           * //Test Code
+           * if (currentViewType == ViewType.FORWARDANDBACKWARD) {
+           * Log.d(TAG, "TWO MOVE");
+           * } else {
+           * Log.d(TAG, "TWO MOVE WRONG!!!!");
+           * }
+           */
         }
         break;
       case MotionEvent.ACTION_UP:
-        fingures = 0;
+        fingers = 0;
         break;
       case MotionEvent.ACTION_DOWN:
-        fingures = 1;
+        fingers = 1;
         break;
       case MotionEvent.ACTION_POINTER_DOWN:
-        if (fingures >= 1) {
-          fingures++;
+        if (fingers >= 1) {
+          fingers++;
+        }
+        if (fingers == 2 && currentViewType == ViewType.DRAGPAD) {
+          switchView(ViewType.FORWARDANDBACKWARD);
         }
         break;
       case MotionEvent.ACTION_POINTER_UP:
-        fingures--;
+        fingers--;
+        if (fingers == 2 && currentViewType == ViewType.DRAGPAD) {
+          switchView(ViewType.FORWARDANDBACKWARD);
+        } else if (fingers == 1 && currentViewType == ViewType.FORWARDANDBACKWARD) {
+          switchView(ViewType.DRAGPAD);
+        }
         break;
       case MotionEvent.ACTION_CANCEL:
-        fingures = 0;
+        fingers = 0;
         break;
     }
     return true;
@@ -68,10 +90,17 @@ public class MagicRightView extends View {
 
   @Override
   protected void onDraw(Canvas canvas) {
-    // TODO Auto-generated method stub
     super.onDraw(canvas);
   }
 
-
-
+  private void switchView(ViewType type) {
+    Log.d(TAG, "Switch to " + type.name());
+    currentViewType = type;
+    switch (type) {
+      case DRAGPAD:
+        break;
+      case FORWARDANDBACKWARD:
+        break;
+    }
+  }
 }
