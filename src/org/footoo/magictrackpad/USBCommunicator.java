@@ -10,7 +10,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 
 public class USBCommunicator {
@@ -31,9 +30,7 @@ public class USBCommunicator {
     return instance;
   }
 
-  private USBCommunicator(Context context) {
-    handler = new Handler();
-  }
+  private USBCommunicator(Context context) {}
 
   public void startConnect() {
     new Thread(startConnection).start();
@@ -49,6 +46,8 @@ public class USBCommunicator {
         return null;
       }
     };
+
+    task.execute();
   }
 
   private final Runnable startConnection = new Thread() {
@@ -87,7 +86,6 @@ public class USBCommunicator {
           } // try/catch
         } // while(true)
       } catch (Exception e) {
-        connectionStatus = "error, disconnected";
         Log.d(TAG, "error, disconnected");
         e.printStackTrace();
       } // try/catch
