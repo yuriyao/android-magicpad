@@ -4,6 +4,7 @@ import android.util.Log;
 
 public class TransUtils {
   private static final String TAG = TransUtils.class.getSimpleName();
+  private static boolean isTry = false;
 
   private TransUtils() {
 
@@ -38,6 +39,7 @@ public class TransUtils {
   }
 
   private static boolean sendViaUSB(int cmdCode) {
+    USBCommunicator.getInstance().sendData(cmdCode);
     return false;
   }
 }

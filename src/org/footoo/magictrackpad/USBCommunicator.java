@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -23,14 +22,14 @@ public class USBCommunicator {
 
   private static USBCommunicator instance;
 
-  public static synchronized USBCommunicator getInstance(Context context) {
+  public static synchronized USBCommunicator getInstance() {
     if (instance == null) {
-      instance = new USBCommunicator(context);
+      instance = new USBCommunicator();
     }
     return instance;
   }
 
-  private USBCommunicator(Context context) {}
+  private USBCommunicator() {}
 
   public void startConnect() {
     new Thread(startConnection).start();

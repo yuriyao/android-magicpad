@@ -83,6 +83,6 @@ public class USBSever {
   } // end private void execAdb()
 
   private static String getADBPath() {
-    return "/Users/rachel/Documents/sdev/android-sdk/platform-tools/adb";
+    return "/Volumes/Documents/android-sdk-macosx/platform-tools/adb";
   }
 }
