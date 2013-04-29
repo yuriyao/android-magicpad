@@ -83,6 +83,7 @@ public class MagicRightView extends View {
         }
         if (fingers == 2 && currentViewType == ViewType.DRAGPAD) {
           switchView(ViewType.FORWARDANDBACKWARD);
+
         }
         break;
       case MotionEvent.ACTION_POINTER_UP:
@@ -91,6 +92,11 @@ public class MagicRightView extends View {
           switchView(ViewType.FORWARDANDBACKWARD);
         } else if (fingers == 1 && currentViewType == ViewType.FORWARDANDBACKWARD) {
           switchView(ViewType.DRAGPAD);
+          if (event.getY() - startY > 0) {
+            TransUtils.send(Command.BACKWARD);
+          } else {
+            TransUtils.send(Command.FORWARD);
+          }
         }
         break;
       case MotionEvent.ACTION_CANCEL:

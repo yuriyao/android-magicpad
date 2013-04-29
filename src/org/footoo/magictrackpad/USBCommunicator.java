@@ -35,7 +35,7 @@ public class USBCommunicator {
     new Thread(startConnection).start();
   }
 
-  public void sendData(final int code) {
+  public void sendData(final String code) {
     AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 
       @Override

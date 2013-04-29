@@ -16,7 +16,7 @@ public class TransUtils {
 
   public static boolean send(Command cmd, float delX, float delY) {
     Log.d(TAG, "send command with del");
-    return sendViaUSB(cmd.getCode());
+    return sendViaUSB(cmd.getCode(), delX, delY);
   }
 
   public enum Command {
@@ -39,7 +39,12 @@ public class TransUtils {
   }
 
   private static boolean sendViaUSB(int cmdCode) {
-    USBCommunicator.getInstance().sendData(cmdCode);
+    USBCommunicator.getInstance().sendData(cmdCode + "");
+    return false;
+  }
+
+  private static boolean sendViaUSB(int cmdCode, float x, float y) {
+    USBCommunicator.getInstance().sendData(cmdCode + "?" + x + ":" + y);
     return false;
   }
 }
