@@ -1,6 +1,10 @@
 package org.footoo.magictrackpad;
 
+import android.util.Log;
+
 public class TransUtils {
+  private static final String TAG = TransUtils.class.getSimpleName();
+
   private TransUtils() {
 
   }
@@ -9,7 +13,8 @@ public class TransUtils {
     return sendViaUSB(cmd.getCode());
   }
 
-  public static boolean send(Command cmd, int delX, int delY) {
+  public static boolean send(Command cmd, float delX, float delY) {
+    Log.d(TAG, "send command with del");
     return sendViaUSB(cmd.getCode());
   }
 

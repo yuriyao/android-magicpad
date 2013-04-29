@@ -1,5 +1,8 @@
 package org.footoo.magictrackpad.view;
 
+import org.footoo.magictrackpad.TransUtils;
+import org.footoo.magictrackpad.TransUtils.Command;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -14,6 +17,11 @@ public class MagicRightView extends View {
   private int fingers = 0;
   private ViewType currentViewType = ViewType.DRAGPAD;
 
+  private float startX;
+  private float startY;
+  private float endX;
+  private float endY;
+
   public MagicRightView(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
   }
@@ -25,6 +33,8 @@ public class MagicRightView extends View {
   public MagicRightView(Context context) {
     super(context);
   }
+
+
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
@@ -41,6 +51,9 @@ public class MagicRightView extends View {
            * Log.d(TAG, "DRAG WRONG!!!");
            * }
            */
+          // TODO draw track
+
+
         }
         else if (fingers == 2) {
           /*
@@ -51,12 +64,17 @@ public class MagicRightView extends View {
            * Log.d(TAG, "TWO MOVE WRONG!!!!");
            * }
            */
+
+          // TODO draw track
         }
         break;
       case MotionEvent.ACTION_UP:
         fingers = 0;
+        setEndPoint(event.getX(), event.getY());
+        TransUtils.send(Command.DRAG, endX - startX, endY - startY);
         break;
       case MotionEvent.ACTION_DOWN:
+        setStartPoint(event.getX(), event.getY());
         fingers = 1;
         break;
       case MotionEvent.ACTION_POINTER_DOWN:
@@ -102,5 +120,15 @@ public class MagicRightView extends View {
       case FORWARDANDBACKWARD:
         break;
     }
+  }
+
+  private void setStartPoint(float x, float y) {
+    startX = x;
+    startY = y;
+  }
+
+  private void setEndPoint(float x, float y) {
+    endX = x;
+    endY = y;
   }
 }
